@@ -1,5 +1,5 @@
-from app import app
 from flask import request, session, redirect, url_for, abort, render_template, flash
+from home import app
 
 
 @app.route('/')
