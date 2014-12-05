@@ -1,5 +1,13 @@
 from flask import request, session, redirect, url_for, abort, render_template, flash
 from home import app
+from home.database import db_session
+from home.models import User
+
+@app.route('/testbd')
+def testbd():
+   res = User.query.all()
+   return render_template('test.html', res=res)
+
 
 
 @app.route('/')
