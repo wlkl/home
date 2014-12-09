@@ -7,8 +7,6 @@ app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'home.db'),
     DEBUG=True,
     SECRET_KEY='abra-kadabra',
-    USERNAME='wlkl',
-    PASSWORD='wen1k0'
 ))
 
 from home.database import db_session
