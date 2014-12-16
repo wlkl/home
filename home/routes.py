@@ -1,7 +1,9 @@
+import os
 from flask import request, redirect, url_for, render_template, flash
 from home import app
 from home.models import User
 from flask.ext.login import LoginManager, login_user, login_required, logout_user
+from home.camera import make_image
 from home.forms import LoginForm
 
 login_manager = LoginManager()
@@ -17,15 +19,27 @@ def load_user(userid):
 
 
 @app.route('/')
+@app.route('/index')
 #@login_required
+def index():
+    return render_template('index.html')
+
+@app.route('/show')
+@login_required
 def show_picture():
-    return render_template('show_picture.html')
+    picture = 'img.jpg'
+    return render_template('show_picture.html', picture=picture)
 
-
-@app.route('/new', methods=['POST'])
+@app.route('/new', methods=['GET', 'POST'])
 @login_required
 def create_picture():
-    return redirect(url_for('show_picture'))
+    if request.method == 'POST' and request.form:
+        picture = make_image()
+        flash('so make an image')
+        return render_template('show_picture.html', picture=picture)
+    elif request.method == 'GET':
+        flash('no image yet')
+        return render_template('new.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -35,7 +49,7 @@ def login():
         if user:
             if user.check_password(request.form['password']):
                 login_user(user)
-                return redirect(url_for('show_picture'))
+                return redirect(url_for('index'))
             else:
                 error = 'bad password, try again'
                 return render_template('login.html', error=error)
@@ -50,4 +64,4 @@ def login():
 def logout():
     logout_user()
     flash('You were logged out')
-    return redirect(url_for('login'))
+    return redirect(url_for('index'))
