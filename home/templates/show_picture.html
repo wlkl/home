@@ -1,4 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
+    {% if picture %}
     <img alt="image" border="3" src="{{ url_for('static', filename=picture) }}">
+    {% endif %}
 {% endblock %}
