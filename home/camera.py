@@ -1,8 +1,13 @@
-import time, datetime
+import os
+import time
+import datetime
+from home import app
+
 import picamera
 
+
 def make_image():
-    name = datetime.datetime.now().strftime('%d.%m.%y-%H:%M:%S') + '.jpg'
+    name = os.path.join(app.static_folder, datetime.datetime.now().strftime('%d.%m.%y-%H:%M:%S') + '.jpg')
     with picamera.PiCamera() as camera:
         camera.resolution = (1024, 768)
         camera.start_preview()
