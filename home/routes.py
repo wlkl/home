@@ -32,10 +32,11 @@ def show_picture():
 @app.route('/new', methods=['GET', 'POST'])
 @login_required
 def create_picture():
+    pic = last_picture
     if request.method == 'POST' and request.form:
-        last_picture = make_image()
+        pic = make_image()
         flash('so make an image')
-        return render_template('show_picture.html', picture=last_picture)
+        return render_template('show_picture.html', picture=pic)
     elif request.method == 'GET':
         flash('no image yet')
         return render_template('new.html')
