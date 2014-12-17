@@ -1,0 +1,9 @@
+Raspberry Pi + Arduino Uno in home project.
+
+How to create new user:
+
+>>> from home.database import db_session
+>>> from home.models import User
+>>> u = User('admin', 'admin@localhost', 'password')
+>>> db_session.add(u)
+>>> db_session.commit()
