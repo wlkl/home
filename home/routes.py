@@ -8,7 +8,7 @@ from home.forms import LoginForm
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-last_picture = None
+last_picture = ""
 
 @login_manager.user_loader
 def load_user(userid):
