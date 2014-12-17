@@ -8,7 +8,7 @@ from home.forms import LoginForm
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-
+last_picture = None
 
 @login_manager.user_loader
 def load_user(userid):
@@ -27,16 +27,15 @@ def index():
 @app.route('/show')
 @login_required
 def show_picture():
-    picture = 'img.jpg'
-    return render_template('show_picture.html', picture=picture)
+    return render_template('show_picture.html', picture=last_picture)
 
 @app.route('/new', methods=['GET', 'POST'])
 @login_required
 def create_picture():
     if request.method == 'POST' and request.form:
-        picture = make_image()
+        last_picture = make_image()
         flash('so make an image')
-        return render_template('show_picture.html', picture=picture)
+        return render_template('show_picture.html', picture=last_picture)
     elif request.method == 'GET':
         flash('no image yet')
         return render_template('new.html')
