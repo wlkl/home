@@ -27,7 +27,8 @@ def index():
 @app.route('/show')
 @login_required
 def show_picture():
-    return render_template('show_picture.html')
+    pi = Image.query.all()
+    return render_template('show_picture.html', picture=None, pi=pi)
 
 @app.route('/new', methods=['GET', 'POST'])
 @login_required
@@ -36,8 +37,9 @@ def create_picture():
         pic = make_image()
         db_session.add(Image(pic))
         db_session.commit()
+        pi = Image.query.all()
         flash("so, here's your image")
-        return render_template('show_picture.html', picture=pic)
+        return render_template('show_picture.html', picture=pic, pi=pi)
     elif request.method == 'GET':
         flash('no image yet')
         return render_template('new.html')
