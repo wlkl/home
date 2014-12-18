@@ -3,7 +3,7 @@ from flask import request, redirect, url_for, render_template, flash
 from home import app
 from home.models import User
 from flask.ext.login import LoginManager, login_user, login_required, logout_user
-#from home.camera import make_image
+from home.camera import make_image
 from home.forms import LoginForm
 
 login_manager = LoginManager()

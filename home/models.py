@@ -35,3 +35,15 @@ class User(Base):
 
     def __repr__(self):
         return 'username %r' % self.name
+
+
+class Image(Base):
+    __tablename__ = 'images'
+    id = Column(Integer, primary_key=True)
+    image = Column(String(30), unique=True)
+
+    def __init__(self, image=None):
+        self.image = image
+
+    def __repr__(self):
+        return self.image
