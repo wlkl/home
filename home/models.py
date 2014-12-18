@@ -1,14 +1,11 @@
-from sqlalchemy import Column, Integer, String
-from home.database import Base
+from sqlalchemy import Column, Integer, String, Table
+from sqlalchemy.orm import mapper
+from home.database import metadata, db_session
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class User(Base):
-    __tablename__ = 'users'
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=True)
-    email = Column(String(120), unique=True)
-    password = Column(String(250))
+class User(object):
+    query = db_session.query_property()
 
     def __init__(self, name=None, email=None, password=None):
         self.name = name
@@ -37,13 +34,28 @@ class User(Base):
         return 'username %r' % self.name
 
 
-class Image(Base):
-    __tablename__ = 'images'
-    id = Column(Integer, primary_key=True)
-    image = Column(String(30), unique=True)
+users = Table('users', metadata,
+    Column('id', Integer, primary_key=True),
+    Column('name', String(50), unique=True),
+    Column('email', String(120), unique=True),
+    Column('password', String(250))
+    )
+
+mapper(User, users)
+
+
+class Image(object):
+    query = db_session.query_property()
 
     def __init__(self, image=None):
         self.image = image
 
     def __repr__(self):
         return self.image
+
+
+images = Table('images', metadata,
+               Column('id', Integer, primary_key=True),
+               Column('image', String(30), unique=True))
+
+mapper(Image, images)

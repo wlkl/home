@@ -1,14 +1,14 @@
 import os
 from flask import request, redirect, url_for, render_template, flash
 from home import app
-from home.models import User
+from home.models import User, Image
+from home.database import db_session
 from flask.ext.login import LoginManager, login_user, login_required, logout_user
 from home.camera import make_image
 from home.forms import LoginForm
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-last_picture = ""
 
 @login_manager.user_loader
 def load_user(userid):
@@ -27,15 +27,16 @@ def index():
 @app.route('/show')
 @login_required
 def show_picture():
-    return render_template('show_picture.html', picture=last_picture)
+    return render_template('show_picture.html')
 
 @app.route('/new', methods=['GET', 'POST'])
 @login_required
 def create_picture():
-    pic = last_picture
     if request.method == 'POST' and request.form:
         pic = make_image()
-        flash('so make an image')
+        db_session.add(Image(pic))
+        db_session.commit()
+        flash("so, here's your image")
         return render_template('show_picture.html', picture=pic)
     elif request.method == 'GET':
         flash('no image yet')
