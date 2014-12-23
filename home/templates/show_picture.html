@@ -6,6 +6,7 @@
     {% if pi %}
     {% for pics in pi %}
     <p><img alt="image" border="3" src="{{ url_for('static', filename=pics) }}"></p>
+        <h4>{{ pics }}</h4>
     {% endfor %}
     {% endif %}
 {% endblock %}
