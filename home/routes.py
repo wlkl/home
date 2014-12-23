@@ -37,9 +37,8 @@ def create_picture():
         pic = make_image()
         db_session.add(Image(pic))
         db_session.commit()
-        pi = Image.query.all()
         flash("so, here's your image")
-        return render_template('show_picture.html', picture=pic, pi=pi)
+        return render_template('show_picture.html', picture=pic, pi=None)
     elif request.method == 'GET':
         flash('no image yet')
         return render_template('new.html')
@@ -68,3 +67,4 @@ def logout():
     logout_user()
     flash('You were logged out')
     return redirect(url_for('index'))
+

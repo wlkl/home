@@ -12,3 +12,5 @@ def init_db():
     metadata.bind = engine
     metadata.reflect(extend_existing=True)
     metadata.create_all()
+
+

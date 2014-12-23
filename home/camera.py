@@ -16,5 +16,5 @@ def make_image():
 #        time.sleep(2)
 #        camera.capture(path)
 #        camera.stop_preview()
-    shutil.copyfile(os.path.join(app.static_folder, 'img.jpg'), os.path.join(app.static_folder, name) )
+    shutil.copyfile(os.path.join(app.static_folder, 'img.jpg'), os.path.join(app.static_folder, name))
     return name

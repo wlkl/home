@@ -1,12 +1,12 @@
 <!doctype html>
 <title>Home</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
 <a href="/index">Home</a>
 <div class=page>
   <h1>Home</h1>
   <div class=metanav>
   {% if current_user.is_authenticated() %}
-      <p><a href="{{ url_for('show_picture') }}">show last image</a></p>
+      <p><a href="{{ url_for('show_picture') }}">show all images</a></p>
       <p><a href="{{ url_for('create_picture') }}">Make new image</a></p>
       <p><a href="{{ url_for('logout') }}">log out</a></p>
   {% else %}

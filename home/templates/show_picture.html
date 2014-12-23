@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
     {% if picture %}
-    <img alt="image" border="3" src="{{ url_for('static', filename=picture) }}">
+    <p><img alt="image" border="3" src="{{ url_for('static', filename=picture) }}"></p>
     {% endif %}
-<ul>
+    {% if pi %}
     {% for pics in pi %}
-    <li><img alt="image" border="3" src="{{ url_for('static', filename=pics) }}"></li>
+    <p><img alt="image" border="3" src="{{ url_for('static', filename=pics) }}"></p>
     {% endfor %}
-</ul>
+    {% endif %}
 {% endblock %}
