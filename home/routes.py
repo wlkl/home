@@ -29,14 +29,14 @@ def index():
 def show_picture():
     if request.method == 'GET':
         pi = Image.query.all()
-        return render_template('show_picture.html', picture=None, pi=pi)
+        return render_template('show_picture.html', picture=None, pi=sorted(pi, reverse=True))
     elif request.method == 'POST' and 'Delete' in request.form:
         pic = request.form.get('Picture')
         db_session.query(Image).filter_by(image=pic).delete()
         db_session.commit()
         os.remove(os.path.join(app.static_folder, pic))
         pi = Image.query.all()
-        return redirect(url_for('show_picture', pi=pi))
+        return redirect(url_for('show_picture', pi=sorted(pi, reverse=True)))
 
 
 @app.route('/new', methods=['GET', 'POST'])
