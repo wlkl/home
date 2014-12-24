@@ -24,11 +24,20 @@ def load_user(userid):
 def index():
     return render_template('index.html')
 
-@app.route('/show')
+@app.route('/show', methods=['GET', 'POST'])
 @login_required
 def show_picture():
-    pi = Image.query.all()
-    return render_template('show_picture.html', picture=None, pi=pi)
+    if request.method == 'GET':
+        pi = Image.query.all()
+        return render_template('show_picture.html', picture=None, pi=pi)
+    elif request.method == 'POST' and 'Delete' in request.form:
+        pic = request.form.get('Picture')
+        db_session.query(Image).filter_by(image=pic).delete()
+        db_session.commit()
+        os.remove(os.path.join(app.static_folder, pic))
+        pi = Image.query.all()
+        return redirect(url_for('show_picture', pi=pi))
+
 
 @app.route('/new', methods=['GET', 'POST'])
 @login_required
@@ -62,7 +71,7 @@ def login():
 
 
 @app.route('/logout', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def logout():
     logout_user()
     flash('You were logged out')

@@ -1,12 +1,16 @@
 {% extends "layout.html" %}
 {% block body %}
-    {% if picture %}
-    <p><img alt="image" border="3" src="{{ url_for('static', filename=picture) }}"></p>
-    {% endif %}
-    {% if pi %}
-    {% for pics in pi %}
-    <p><img alt="image" border="3" src="{{ url_for('static', filename=pics) }}"></p>
-        <h4>{{ pics }}</h4>
-    {% endfor %}
-    {% endif %}
+        {% if picture %}
+            <p><img alt="image" border="3" src="{{ url_for('static', filename=picture) }}"></p>
+        {% endif %}
+        {% if pi %}
+            {% for pics in pi %}
+            <p><img alt="image" border="3" src="{{ url_for('static', filename=pics) }}"></p>
+                <h4>{{ pics }}</h4>
+                <form action="" method="post">
+                <input type="hidden" name="Picture" value="{{ pics }}">
+                    <input type="submit" name="Delete" value="Delete this picture">
+                </form>
+            {% endfor %}
+        {% endif %}
 {% endblock %}
