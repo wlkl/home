@@ -1,9 +1,10 @@
 import os
-from flask import request, redirect, url_for, render_template, flash
+from flask import request, redirect, url_for, render_template, flash, Response
 from home import app
 from home.models import User, Image
 from home.database import db_session
 from flask.ext.login import LoginManager, login_user, login_required, logout_user
+from home.camera import Camera
 from home.camera import make_image
 from home.forms import LoginForm
 
@@ -23,6 +24,21 @@ def load_user(userid):
 #@login_required
 def index():
     return render_template('index.html')
+
+def gen(camera):
+    """Video streaming generator function."""
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(Camera()), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video_page')
+def video_page():
+    return render_template('video.html')
 
 @app.route('/show', methods=['GET', 'POST'])
 @login_required
