@@ -1,6 +1,11 @@
-{% extends "layout.html" %}
-{% block body %}
-        <h1>Video streaming</h1>
-        <img src="{{ url_for("video_feed") }}">
-{% endblock %}
+<html>
+<head>
+<title>Vedeo</title>
+</head>
+<body>
+        <p><h1>Video streaming</h1></p>
+        <p><a href="{{ url_for('index') }}">Back</a></p>
+        <p><img src="{{ url_for("video_feed") }}"></p>
+</body>
+</html>
 
