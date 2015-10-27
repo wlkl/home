@@ -56,3 +56,5 @@ docs/_build/
 target/
 
 *.jpg
+*.swo
+*.swp
