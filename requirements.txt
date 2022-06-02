@@ -19,7 +19,7 @@ chardet==2.3.0
 colorama==0.3.2
 decorator==3.4.0
 gunicorn==18.0
-html5lib==0.999
+html5lib==0.99999999
 ipython==2.3.0
 itsdangerous==0.24
 lxkeymap==0.1
